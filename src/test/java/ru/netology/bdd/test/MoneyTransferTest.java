@@ -1,9 +1,14 @@
+package ru.netology.bdd.test;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.netology.bdd.data.DataHelper;
+import ru.netology.bdd.page.DashboardPage;
+import ru.netology.bdd.page.LoginPage;
+import ru.netology.bdd.page.TransactionPage;
 
 import static com.codeborne.selenide.Selenide.open;
 
@@ -26,7 +31,7 @@ public class MoneyTransferTest {
         var secondBalance = dashboardPage.getSecondCardBalance();
         int cardIndex = 1;
         int amount = 150;
-        dashboardPage.transferTo(cardIndex).Transfer(amount, DataHelper.getFirstCardNumber().getNumber());
+        dashboardPage.transferTo(cardIndex).transfer(amount, DataHelper.getFirstCardNumber().getNumber());
         var currentBalanceFirst = dashboardPage.getFirstCardBalance();
         var currentBalanceSecond = dashboardPage.getSecondCardBalance();
         Assertions.assertEquals(firstBalance - amount, currentBalanceFirst);
@@ -40,7 +45,7 @@ public class MoneyTransferTest {
         var secondBalance = dashboardPage.getSecondCardBalance();
         int cardIndex = 0;
         int amount = 250;
-        dashboardPage.transferTo(cardIndex).Transfer(amount, DataHelper.getSecondCardNumber().getNumber());
+        dashboardPage.transferTo(cardIndex).transfer(amount, DataHelper.getSecondCardNumber().getNumber());
         var currentBalanceFirst = dashboardPage.getFirstCardBalance();
         var currentBalanceSecond = dashboardPage.getSecondCardBalance();
         Assertions.assertEquals(firstBalance + amount, currentBalanceFirst);
@@ -54,9 +59,8 @@ public class MoneyTransferTest {
         int amount = 150;
         var transferPage = new TransactionPage();
         dashboardPage.transferTo(cardIndex)
-                .Transfer(amount, "1234_1234_1234_1234");
-        transferPage.getNotification().shouldBe(Condition.visible);
-        transferPage.getNotification().shouldHave(Condition.exactText("Ошибка\n" +
-                "Ошибка! Произошла ошибка"));
+                .transfer(amount, DataHelper.getInvalidCardNumber().getNumber());
+        transferPage.getNotification();
+
     }
 }

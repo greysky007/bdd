@@ -1,3 +1,6 @@
+package ru.netology.bdd.page;
+
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -10,14 +13,19 @@ public class TransactionPage {
 
     private SelenideElement errorNotification = $x("//div[@data-test-id='error-notification']");
 
-    public DashboardPage Transfer(int amount, String cardNumber) {
+    public DashboardPage transfer(int amount, String cardNumber) {
         amountField.setValue(Integer.toString(amount));
         fromField.setValue(cardNumber);
         buttonTrans.click();
         return new DashboardPage();
     }
 
-    public SelenideElement getNotification() {
-        return errorNotification;
+    public void getNotification() {
+
+        errorNotification.shouldBe(Condition.visible);
+        errorNotification.shouldHave(Condition.exactText("Ошибка\n" +
+                "Ошибка! Произошла ошибка"));
+
+
     }
 }

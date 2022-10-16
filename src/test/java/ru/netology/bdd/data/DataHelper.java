@@ -1,3 +1,5 @@
+package ru.netology.bdd.data;
+import com.github.javafaker.Faker;
 import lombok.Value;
 
 public class DataHelper {
@@ -35,5 +37,8 @@ public class DataHelper {
 
     public static CardNumber getSecondCardNumber() {
         return new CardNumber("5559 0000 0000 0002");
+    }
+    public static CardNumber getInvalidCardNumber(){return new CardNumber("1234 1234 1234 1234");
+
     }
 }
