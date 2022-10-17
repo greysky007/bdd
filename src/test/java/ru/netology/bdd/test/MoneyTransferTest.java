@@ -57,10 +57,9 @@ public class MoneyTransferTest {
         var dashboardPage = new DashboardPage();
         int cardIndex = 0;
         int amount = 150;
-        var transferPage = new TransactionPage();
-        dashboardPage.transferTo(cardIndex)
-                .transfer(amount, DataHelper.getInvalidCardNumber().getNumber());
-        transferPage.getNotification();
+        var page = dashboardPage.transferTo(cardIndex);
+        page.transfer(amount, DataHelper.getInvalidCardNumber().getNumber());
+        page.getNotification();
 
     }
 }
